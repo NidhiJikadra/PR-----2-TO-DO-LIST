@@ -37,25 +37,37 @@ app.patch("/update/:id",(req,res)=>{
 
 app.delete("/delete/:id",(req,res)=>{
     let {id}=req.params
-    let del = initialTodo.filter((initialTodo)=>initialTodo.id == id)
-    console.log(del);
-    res.status(200).send(...del)
+    const index = initialTodo.findIndex((initialTodo)=>initialTodo.id==id)
+    let deletedTodo=initialTodo.splice(index,1)[0]
+    console.log(deletedTodo);
+    res.send({deletedTodo:deletedTodo,initialTodo:initialTodo})
 })
 
-app.get("/todo/:id",(req,res)=>{
-    let {id}=req.params
-    if(id>0){
-        let data=initialTodo.filter((initialTodo)=>initialTodo.id==id)
-        console.log(data)
-        res.status(200).send(data)
-    }
-    else{
-        res.status(200).send("User not exist")
-    }
-})
+// app.get("/todo/:id",(req,res)=>{
+//     let {id}=req.params
+//     if(id>0){
+//         let data=initialTodo.filter((initialTodo)=>initialTodo.id==id)
+//         console.log(data)
+//         res.status(200).send(data)
+//     }
+//     else{
+//         console.log("User not exist");
+//         res.status(200).send("User not exist")
+//     }
+// })
 
 app.get("/findbystatus",(req,res)=>{
-    
+    let status = req.query.isCompleted
+    console.log(status);
+    let bool=(status === 'true')
+    if(status=="true"){
+        const a = initialTodo.filter((initialTodo)=>initialTodo.isCompleted==bool)
+        res.send(a)
+    }
+    else if(status=="false"){
+        const b = initialTodo.filter((initialTodo)=>initialTodo.isCompleted==bool)
+        res.send(b)
+    }
 })
 
 app.listen(8090,()=>{
