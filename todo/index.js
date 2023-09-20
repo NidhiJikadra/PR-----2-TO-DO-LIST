@@ -14,7 +14,7 @@ app.get("/todos",(req,res)=>{
 
 app.post("/addtodo",(req,res)=>{
     let newtodo = {
-        title : 
+        title : title
     }
     console.log(req.body)
     res.send(req.body)
