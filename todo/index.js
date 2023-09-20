@@ -9,14 +9,13 @@ app.get("/",(req,res)=>{
 })
 
 app.get("/todos",(req,res)=>{
-    res.status(200).send(req.body)
+    console.log(initialTodo)
+    res.status(200).send(initialTodo)
 })
 
 app.post("/addtodo",(req,res)=>{
-    let newtodo = {
-        title : req.body.title,
-        id:initialTodo.length+1
-    }
+    const newtodo = req.body
+    newtodo.id = initialTodo.length+1
     console.log(newtodo)
     initialTodo.push(newtodo)
     res.status(200).send(newtodo)
@@ -53,6 +52,10 @@ app.get("/todo/:id",(req,res)=>{
     else{
         res.status(200).send("User not exist")
     }
+})
+
+app.get("/findbystatus",(req,res)=>{
+    
 })
 
 app.listen(8090,()=>{
