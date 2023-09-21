@@ -43,18 +43,20 @@ app.delete("/delete/:id",(req,res)=>{
     res.send({deletedTodo:deletedTodo,initialTodo:initialTodo})
 })
 
-// app.get("/todo/:id",(req,res)=>{
-//     let {id}=req.params
-//     if(id>0){
-//         let data=initialTodo.filter((initialTodo)=>initialTodo.id==id)
-//         console.log(data)
-//         res.status(200).send(data)
-//     }
-//     else{
-//         console.log("User not exist");
-//         res.status(200).send("User not exist")
-//     }
-// })
+app.get("/todo/:id",(req,res)=>{
+    let id=req.params.id
+    let data=initialTodo.filter((initialTodo)=>initialTodo.id==id)
+    if(data!==null){
+        console.log(data)
+        let bool = Number(id)
+        res.status(200).send({data})
+      
+    }
+    else{
+        console.log("User not exist");
+        res.status(400).send("User not exist")
+    }
+})
 
 app.get("/findbystatus",(req,res)=>{
     let status = req.query.isCompleted
