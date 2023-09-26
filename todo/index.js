@@ -13,17 +13,21 @@ app.get("/", (req, res) => {
 });
 
 app.get("/todos", (req, res) => {
-  console.log(initialTodo);
+  // console.log(initialTodo);
   res.status(200).send(initialTodo);
 });
+
 
 app.post("/addtodo", (req, res) => {
   const newtodo = req.body;
   newtodo.id = initialTodo.length + 1;
-  console.log(newtodo);
+  // console.log(newtodo);
   initialTodo.push(newtodo);
   res.status(200).send(newtodo);
 });
+
+
+
 
 app.patch("/update/:id", (req, res) => {
   let { id } = req.params;
@@ -32,38 +36,34 @@ app.patch("/update/:id", (req, res) => {
   if (index == -1) {
     res.status(404).send("Id not Found.");
   } else {
-    initialTodo[index] = req.body;
-    console.log((initialTodo[index] = req.body));
-    res.status(200).send((initialTodo[index] = req.body));
+    console.log(initialTodo[index]);
+    console.log(req.body);
+    initialTodo[index].title=req.body.title
+    initialTodo[index].isCompleted=req.body.isCompleted
+    
+    // console.log((initialTodo[index] = req.body));
   }
+  res.status(200).send(initialTodo[index]);
 });
 
 app.delete("/delete/:id", (req, res) => {
   let { id } = req.params;
   const index = initialTodo.findIndex((initialTodo) => initialTodo.id == id);
-  let deletedTodo = initialTodo.splice(index, 1)[0];
-  console.log(deletedTodo);
-  res.send({ deletedTodo: deletedTodo });
+  let deletedTodo=initialTodo.splice(index,1)[0]
+  // console.log(deletedTodo);
+  res.send({deletedTodo:deletedTodo,todos:initialTodo})
 });
 
 app.get("/todo/:id", (req, res) => {
   let id = req.params.id;
   let data = initialTodo.filter((initialTodo) =>initialTodo.id==id);
-    console.log("test",...data);
+    // console.log("test",...data);
   res.status(200).send(...data);
-
-//   if (id == initialTodo.id) {
-//     console.log(data);
-//     // let bool = Number(id)
-//   } else {
-//     console.log("User not exist");
-//     res.status(404).send("User not exist");
-//   }
 });
 
 app.get("/findbystatus", (req, res) => {
   let status = req.query.isCompleted;
-  console.log(status);
+  // console.log(status);
   let bool = status === "true";
   if (status == "true") {
     const a = initialTodo.filter(
